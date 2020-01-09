@@ -7,14 +7,30 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
-  /**
-   * Creates a new ExampleSubsystem.
-   */
-  public ExampleSubsystem() {
+public class Shooter extends SubsystemBase {
 
+  private WPI_TalonSRX shooterMotor;
+  private static Shooter shooter;
+  /**
+   * Creates a new Shooter.
+   */
+  public Shooter() {
+    shooterMotor = new WPI_TalonSRX(0);
+  }
+
+  public void runShooter(double speed){
+    shooterMotor.set(speed);
+  }
+
+  public static Shooter getInstance(){
+    if(shooter == null){
+      shooter = new Shooter();
+    }
+    return shooter;
   }
 
   @Override
