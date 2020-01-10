@@ -13,17 +13,31 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
 
-  private WPI_TalonSRX shooterMotor;
+  private WPI_TalonSRX bottomShooter;
+  private WPI_TalonSRX topShooter;
+
   private static Shooter shooter;
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-    shooterMotor = new WPI_TalonSRX(0);
+    bottomShooter = new WPI_TalonSRX(0);
+    topShooter = new WPI_TalonSRX(1);
   }
 
-  public void runShooter(double speed){
-    shooterMotor.set(speed);
+  public void setShooter(double baseSpeed, double ... differential){
+    if(differential.length == 0){
+      bottomShooter.set(baseSpeed);
+      topShooter.set(baseSpeed);
+    }
+    else if(differential.length == 1){
+      bottomShooter.set(baseSpeed);
+      topShooter.set(baseSpeed + differential[0]);
+    }
+    else{
+      throw new IllegalArgumentException("Too many arguments passed as a differential");
+    }
+    
   }
 
   public static Shooter getInstance(){
