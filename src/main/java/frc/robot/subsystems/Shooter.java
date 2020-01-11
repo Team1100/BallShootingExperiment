@@ -26,17 +26,25 @@ public class Shooter extends SubsystemBase {
 
   public void setSpeed(double baseSpeed, double ... differential){
     if(differential.length == 0){
-      bottomShooter.set(baseSpeed);
+      bottomShooter.set(-baseSpeed);
       topShooter.set(baseSpeed);
     }
     else if(differential.length == 1){
-      bottomShooter.set(baseSpeed);
+      bottomShooter.set(-baseSpeed);
       topShooter.set(baseSpeed + differential[0]);
     }
     else{
       throw new IllegalArgumentException("Too many arguments passed as a differential");
     }
     
+  }
+
+  public void setBottom(double speed){
+    bottomShooter.set(speed);
+  }
+
+  public void setTop(double speed){
+    topShooter.set(speed);
   }
 
   public static Shooter getInstance(){

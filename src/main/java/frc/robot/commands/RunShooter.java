@@ -11,12 +11,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class DefaultShooter extends CommandBase {
-  private double speed, diff;
+public class RunShooter extends CommandBase {
+  private double topSpeed, botSpeed;
+  private double lastTopSpeed, lastBotSpeed;
+
+  private boolean isFinished;
   /**
    * Creates a new DefaultShooter.
    */
-  public DefaultShooter(Shooter shooter) {
+  public RunShooter(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
   }
@@ -24,26 +27,38 @@ public class DefaultShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    lastTopSpeed = SmartDashboard.getNumber("Top Shooter Speed", 0);
+    lastBotSpeed = SmartDashboard.getNumber("Bottom Shooter Speed", 0);
+    isFinished = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.printf("speed: %f diff: %f", speed, diff);
-    speed = SmartDashboard.getNumber("Shooter Speed", 0);
-    diff = SmartDashboard.getNumber("Shooter Differential", 0);
+    topSpeed = SmartDashboard.getNumber("Top Shooter Speed", 0);
+    botSpeed = SmartDashboard.getNumber("Bottom Shooter Speed", 0);
 
-    Shooter.getInstance().setSpeed(speed, diff);
+    if(lastTopSpeed != topSpeed || lastBotSpeed != botSpeed){
+      isFinished = true;
+    }
+
+    lastTopSpeed = topSpeed;
+    lastBotSpeed = botSpeed;
+
+    Shooter.getInstance().setTop(topSpeed);
+    Shooter.getInstance().setBottom(-botSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Shooter.getInstance().setTop(0);
+    Shooter.getInstance().setBottom(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }

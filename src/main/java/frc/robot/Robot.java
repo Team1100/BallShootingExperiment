@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.RunShooter;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -91,8 +93,12 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    SmartDashboard.putNumber("Shooter Speed", 0);
-    SmartDashboard.putNumber("Shooter Differential", 0);
+    SmartDashboard.putNumber("Top Shooter Speed", 0);
+    SmartDashboard.putNumber("Bottom Shooter Speed", 0);
+    SmartDashboard.putData("Start Both Motors", new RunShooter(Shooter.getInstance()));
+
+
+    //SmartDashboard.putNumber("Shooter Differential", 0);
 
     //DefaultShooter ds = new DefaultShooter(Shooter.getInstance());
     //ds.schedule();
