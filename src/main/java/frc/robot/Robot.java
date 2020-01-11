@@ -92,6 +92,10 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putNumber("Shooter Speed", 0);
+    SmartDashboard.putNumber("Shooter Differential", 0);
+
+    //DefaultShooter ds = new DefaultShooter(Shooter.getInstance());
+    //ds.schedule();
   }
 
   /**

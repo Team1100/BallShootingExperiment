@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
@@ -25,7 +24,7 @@ public class Shooter extends SubsystemBase {
     topShooter = new WPI_TalonSRX(1);
   }
 
-  public void setShooter(double baseSpeed, double ... differential){
+  public void setSpeed(double baseSpeed, double ... differential){
     if(differential.length == 0){
       bottomShooter.set(baseSpeed);
       topShooter.set(baseSpeed);
@@ -51,4 +50,5 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 }

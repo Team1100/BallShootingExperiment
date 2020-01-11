@@ -7,10 +7,14 @@
 
 package frc.robot;
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DefaultShooter;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -20,8 +24,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Shooter m_exampleSubsystem = new Shooter();
-
+  private final Shooter shooterSubsystem = new Shooter();
+  private final DefaultShooter ds = new DefaultShooter(shooterSubsystem);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -38,6 +42,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    shooterSubsystem.setDefaultCommand(ds);
   }
 
 
