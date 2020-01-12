@@ -46,7 +46,7 @@ public class RunShooter extends CommandBase {
     lastBotSpeed = botSpeed;
 
     Shooter.getInstance().setTop(topSpeed);
-    Shooter.getInstance().setBottom(-botSpeed);
+    Shooter.getInstance().setBottom(botSpeed);
   }
 
   // Called once the command ends or is interrupted.

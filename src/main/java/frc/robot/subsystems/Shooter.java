@@ -8,12 +8,19 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
 
   private WPI_TalonSRX bottomShooter;
   private WPI_TalonSRX topShooter;
+
+  private Encoder botEncoder;
+  private Encoder topEncoder;
+
+  private final double PPD = 2048;
 
   private static Shooter shooter;
   /**
@@ -22,6 +29,13 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     bottomShooter = new WPI_TalonSRX(0);
     topShooter = new WPI_TalonSRX(1);
+
+    botEncoder = new Encoder(0,1);
+    topEncoder = new Encoder(2,3);
+
+    botEncoder.setDistancePerPulse(1/PPD);
+    topEncoder.setDistancePerPulse(1/PPD);
+
   }
 
   public void setSpeed(double baseSpeed, double ... differential){
@@ -40,11 +54,23 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setBottom(double speed){
-    bottomShooter.set(speed);
+    bottomShooter.set(-speed);
   }
 
   public void setTop(double speed){
     topShooter.set(speed);
+  }
+
+  public Encoder getBottomEncoder(){
+    return botEncoder;
+  }
+
+  public Encoder getTopEncoder(){
+    return topEncoder;
+  }
+
+  public double getRPM(Encoder encoder){
+    return encoder.getRate() * 60;
   }
 
   public static Shooter getInstance(){
