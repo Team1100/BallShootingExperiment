@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.PIDShooter;
+import frc.robot.commands.TopPIDShooter;
+import frc.robot.commands.BottomPIDShooter;
 import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Shooter;
 
@@ -97,14 +98,18 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Top Shooter Speed", 0);
     SmartDashboard.putNumber("Bottom Shooter Speed", 0);
     SmartDashboard.putData("Start Both Motors", new RunShooter(Shooter.getInstance()));
-    SmartDashboard.putNumber("Setpoint", 0);
-    SmartDashboard.putData("PID Shooter", new PIDShooter(2000));
 
-    SmartDashboard.putNumber("Encoder Bottom", 0);
-    SmartDashboard.putNumber("Encoder Top", 0);
-    SmartDashboard.putNumber("Encoder Rate", 0);
+    SmartDashboard.putData("Top PID Shooter", new TopPIDShooter(3600));
+    SmartDashboard.putData("Bottom PID Shooter", new BottomPIDShooter(2600));
 
-    Shooter.getInstance().getBottomEncoder().reset();
+
+    SmartDashboard.putNumber("Bottom Rotations", 0);
+    SmartDashboard.putNumber("Top Rotations", 0);
+    SmartDashboard.putNumber("Top RPM", 0);
+    SmartDashboard.putNumber("Bot RPM", 0);
+
+
+    Shooter.getInstance().getBotEncoder().reset();
     Shooter.getInstance().getTopEncoder().reset();
     //SmartDashboard.putNumber("Shooter Differential", 0);
 
@@ -117,9 +122,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Encoder Bottom", Shooter.getInstance().getBottomEncoder().getDistance());
-    SmartDashboard.putNumber("Encoder Top", Shooter.getInstance().getTopEncoder().getDistance());
-    SmartDashboard.putNumber("Encoder Rate", Shooter.getInstance().getRPM(Shooter.getInstance().getTopEncoder()));
+    SmartDashboard.putNumber("Bottom Rotations", Shooter.getInstance().getBotEncoder().getDistance());
+    SmartDashboard.putNumber("Top Rotations", Shooter.getInstance().getTopEncoder().getDistance());
+    SmartDashboard.putNumber("Top RPM", Shooter.getInstance().getRPM(Shooter.getInstance().getTopEncoder()));
+    SmartDashboard.putNumber("Bot RPM", Shooter.getInstance().getRPM(Shooter.getInstance().getBotEncoder()));
+
   }
 
   @Override

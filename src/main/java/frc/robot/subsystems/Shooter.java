@@ -20,7 +20,9 @@ public class Shooter extends SubsystemBase {
   private Encoder botEncoder;
   private Encoder topEncoder;
 
-  private final double PPD = 2048;
+  private final double TOP_PPD = 2048;
+  private final double BOT_PPD = 1024;
+
 
   private static Shooter shooter;
   /**
@@ -33,8 +35,8 @@ public class Shooter extends SubsystemBase {
     botEncoder = new Encoder(0,1);
     topEncoder = new Encoder(2,3);
 
-    botEncoder.setDistancePerPulse(1/PPD);
-    topEncoder.setDistancePerPulse(1/PPD);
+    topEncoder.setDistancePerPulse(1/TOP_PPD);
+    botEncoder.setDistancePerPulse(1/BOT_PPD);
 
   }
 
@@ -54,14 +56,14 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setBottom(double speed){
-    bottomShooter.set(-speed);
+    bottomShooter.set(speed);
   }
 
   public void setTop(double speed){
-    topShooter.set(speed);
+    topShooter.set(-speed);
   }
 
-  public Encoder getBottomEncoder(){
+  public Encoder getBotEncoder(){
     return botEncoder;
   }
 

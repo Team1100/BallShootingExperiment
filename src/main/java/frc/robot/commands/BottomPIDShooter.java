@@ -14,22 +14,22 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class PIDShooter extends PIDCommand {
+public class BottomPIDShooter extends PIDCommand {
   /**
    * Creates a new PIDShooter.
    */
-  public PIDShooter(double RPM) {
+  public BottomPIDShooter(double RPM) {
     super(
         // The controller that the command will use
-        new PIDController(0.001, 0, 0.5),
+        new PIDController(0.0005, 0.00005, 0),
         // This should return the measurement
-        () -> Shooter.getInstance().getRPM(Shooter.getInstance().getTopEncoder()),
+        () -> Shooter.getInstance().getRPM(Shooter.getInstance().getBotEncoder()),
         // This should return the setpoint (can also be a constant)
         () -> RPM,
         // This uses the output
         output -> {
           // Use the output here
-          Shooter.getInstance().setTop(output);
+          Shooter.getInstance().setBottom(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -41,5 +41,6 @@ public class PIDShooter extends PIDCommand {
   @Override
   public boolean isFinished() {
     return false;
+    //getController().atSetpoint();
   }
 }
