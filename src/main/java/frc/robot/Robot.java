@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.TopPIDShooter;
 import frc.robot.commands.BottomPIDShooter;
+import frc.robot.commands.CloseValve;
+import frc.robot.commands.OpenValve;
+import frc.robot.commands.RapidFirePiston;
 import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Shooter;
 
@@ -115,6 +118,11 @@ public class Robot extends TimedRobot {
 
     //DefaultShooter ds = new DefaultShooter(Shooter.getInstance());
     //ds.schedule();
+
+    SmartDashboard.putNumber("iterations", 5);
+    SmartDashboard.putData(new OpenValve());
+    SmartDashboard.putData(new CloseValve());
+    SmartDashboard.putData(new RapidFirePiston());
   }
 
   /**
