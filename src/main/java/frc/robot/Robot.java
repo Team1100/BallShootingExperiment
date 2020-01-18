@@ -102,10 +102,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Bottom Shooter Speed", 0);
     SmartDashboard.putData("Start Both Motors", new RunShooter(Shooter.getInstance()));
     SmartDashboard.putNumber("Top Setpoint", 0);
-    SmartDashboard.putNumber("Bottom Setpoint", 0)
+    SmartDashboard.putNumber("Bottom Setpoint", 0);
 
-    SmartDashboard.putData("Top PID Shooter", new TopPIDShooter(SmartDashboard.getNumber("Top Setpoint")));
-    SmartDashboard.putData("Bottom PID Shooter", new BottomPIDShooter(SmartDashboard.getNumber("Bot Setpoint")));
+    SmartDashboard.putData("Top PID Shooter", new TopPIDShooter(SmartDashboard.getNumber("Top Setpoint", 0)));
+    SmartDashboard.putData("Bottom PID Shooter", new BottomPIDShooter(SmartDashboard.getNumber("Bot Setpoint", 0)));
 
 
     SmartDashboard.putNumber("Bottom Rotations", 0);
