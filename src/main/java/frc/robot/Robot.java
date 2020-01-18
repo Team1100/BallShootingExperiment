@@ -122,6 +122,7 @@ public class Robot extends TimedRobot {
     //ds.schedule();
 
     SmartDashboard.putNumber("iterations", 5);
+    SmartDashboard.putNumber("period", 0.2);
     SmartDashboard.putData(new OpenValve());
     SmartDashboard.putData(new CloseValve());
     SmartDashboard.putData(new RapidFirePiston());

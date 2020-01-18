@@ -14,19 +14,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RapidFirePiston extends CommandBase {
-  private static final int STATE1 = 1;
-	private static final int STATE2 = 2;
-  private static final int STATE3 = 3;
-  
-  private static final double PERIOD = 0.1;
-  private static final double SPERIOD = 0.1;
-  
+
+  double period;  
   Piston piston;
-  int state = STATE1;
   Timer timer;
-  Timer sTimer;
   DoubleSolenoid.Value solenoidState;
-	int stateCounter = 0;
+	int iterations;
   /**
    * Creates a new RapidFirePiston.
    */
@@ -35,51 +28,41 @@ public class RapidFirePiston extends CommandBase {
     addRequirements(Piston.getInstance());
     piston = Piston.getInstance();
     timer = new Timer();
-    sTimer = new Timer();
+    iterations = 0;
+    period = 0.2;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    state = STATE1;
     timer.start();
-    sTimer.start();
-    solenoidState = DoubleSolenoid.Value.kForward;
-    stateCounter = 0;
+    solenoidState = DoubleSolenoid.Value.kReverse;
+    period = SmartDashboard.getNumber("period", 0.2);
+    piston.getValve().set(solenoidState);
+    iterations = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch (state) {
-    	case STATE1:
-    			state = STATE2;
-    			piston.getValve().set(solenoidState);
-    		break;
-    	case STATE2:
-    		if (piston.getValve().get() == solenoidState) {
-    	    	if (solenoidState == DoubleSolenoid.Value.kForward) {
-    				solenoidState = DoubleSolenoid.Value.kReverse;
-    			} else {
-    				solenoidState = DoubleSolenoid.Value.kForward;
-    			}
-    	    	piston.getValve().set(DoubleSolenoid.Value.kOff);
-    		}
-    		if (sTimer.hasPeriodPassed(SPERIOD)) {
-				  piston.getValve().set(solenoidState);
-    		}
-    		if (timer.hasPeriodPassed(PERIOD)) {
-    			piston.getValve().set(DoubleSolenoid.Value.kOff);
-    			state = STATE3;
-    		}
-    		break;
-    	case STATE3:
-    			stateCounter++;
-    			state = STATE1;
-    		break;
-    	default:
-    		break;
-    	}
+    // Toggle piston state variable when it gets fully extended or retracted
+    // and then turn the piston off
+    if (piston.getValve().get() == solenoidState) {
+      if (solenoidState == DoubleSolenoid.Value.kForward) {
+        solenoidState = DoubleSolenoid.Value.kReverse;
+      } else {
+        solenoidState = DoubleSolenoid.Value.kForward;
+      }
+      piston.getValve().set(DoubleSolenoid.Value.kOff);
+    }
+
+    // Changes piston state once the period has expired.
+    if (timer.hasPeriodPassed(period/2)) {
+        piston.getValve().set(solenoidState);
+        if (solenoidState == DoubleSolenoid.Value.kForward) {
+          iterations++;
+        }
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -90,6 +73,6 @@ public class RapidFirePiston extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return stateCounter >= SmartDashboard.getNumber("iterations", 5);
+    return iterations >= SmartDashboard.getNumber("iterations", 5);
   }
 }
