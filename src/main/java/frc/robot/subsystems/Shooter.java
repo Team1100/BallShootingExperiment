@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
   private Encoder topEncoder;
 
   private final double TOP_PPD = 2048;
-  private final double BOT_PPD = 1024;
+  private final double BOT_PPD = 2048;
 
 
   private static Shooter shooter;
@@ -32,7 +32,7 @@ public class Shooter extends SubsystemBase {
     bottomShooter = new WPI_TalonSRX(0);
     topShooter = new WPI_TalonSRX(1);
 
-    botEncoder = new Encoder(0,1);
+    botEncoder = new Encoder(5,6);
     topEncoder = new Encoder(2,3);
 
     topEncoder.setDistancePerPulse(1/TOP_PPD);

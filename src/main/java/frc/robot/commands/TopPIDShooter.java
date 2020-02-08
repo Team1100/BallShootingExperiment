@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Shooter;
 
@@ -18,14 +19,14 @@ public class TopPIDShooter extends PIDCommand {
   /**
    * Creates a new PIDShooter.
    */
-  public TopPIDShooter(double RPM) {
+  public TopPIDShooter() {
     super(
         // The controller that the command will use
-        new PIDController(0.002, 0.0007, 0),
+        new PIDController(0.00224, 0.0005, 0),
         // This should return the measurement
         () -> Shooter.getInstance().getRPM(Shooter.getInstance().getTopEncoder()),
         // This should return the setpoint (can also be a constant)
-        () -> RPM,
+        () -> SmartDashboard.getNumber("Top Setpoint", 0),
         // This uses the output
         output -> {
           // Use the output here

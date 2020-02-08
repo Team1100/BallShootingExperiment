@@ -14,10 +14,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.TopPIDShooter;
 import frc.robot.commands.BottomPIDShooter;
 import frc.robot.commands.CloseValve;
+import frc.robot.commands.FireBall;
 import frc.robot.commands.OpenValve;
+import frc.robot.commands.PIDTurret;
 import frc.robot.commands.RapidFirePiston;
-import frc.robot.commands.RunShooter;
+import frc.robot.commands.RunTurret;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -98,14 +101,13 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    SmartDashboard.putNumber("Top Shooter Speed", 0);
-    SmartDashboard.putNumber("Bottom Shooter Speed", 0);
-    SmartDashboard.putData("Start Both Motors", new RunShooter(Shooter.getInstance()));
+    SmartDashboard.putNumber("Turret Speed", 0);
+    SmartDashboard.putData("Run Turret", new RunTurret(Turret.getInstance()));
     SmartDashboard.putNumber("Top Setpoint", 0);
-    SmartDashboard.putNumber("Bottom Setpoint", 0)
-
-    SmartDashboard.putData("Top PID Shooter", new TopPIDShooter(SmartDashboard.getNumber("Top Setpoint")));
-    SmartDashboard.putData("Bottom PID Shooter", new BottomPIDShooter(SmartDashboard.getNumber("Bot Setpoint")));
+    SmartDashboard.putNumber("Bottom Setpoint", 0);
+    SmartDashboard.putData("Top PID", new TopPIDShooter());
+    SmartDashboard.putData("Bot PID", new BottomPIDShooter());
+    SmartDashboard.putData("Fire Ball", new FireBall());
 
 
     SmartDashboard.putNumber("Bottom Rotations", 0);
@@ -125,6 +127,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(new OpenValve());
     SmartDashboard.putData(new CloseValve());
     SmartDashboard.putData(new RapidFirePiston());
+    SmartDashboard.putData(new PIDTurret());
   }
 
   /**

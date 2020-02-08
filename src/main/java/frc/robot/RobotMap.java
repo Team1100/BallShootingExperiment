@@ -152,7 +152,7 @@ public class RobotMap {
 	private static final int PDP_16 = 16;
 
 	// [P]iston subsystem
-	public static final int P_PISTON = PCM_0;
-	public static final int P_PORT0 = RELAY_0;
-	public static final int P_PORT1 = RELAY_1;
+	public static final int P_PCM_CAN = 3;
+	public static final int P_PORT0 = PCM_1;
+	public static final int P_PORT1 = PCM_0;
 }

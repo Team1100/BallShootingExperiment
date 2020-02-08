@@ -8,29 +8,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class BottomPIDShooter extends PIDCommand {
+public class PIDTurret extends PIDCommand {
   /**
-   * Creates a new PIDShooter.
+   * Creates a new PIDTurret.
    */
-  public BottomPIDShooter() {
+  public PIDTurret() {
     super(
         // The controller that the command will use
-        new PIDController(0.00224, 0.0005, 0),
+        new PIDController(0.009, 0.002, 0),
         // This should return the measurement
-        () -> Shooter.getInstance().getRPM(Shooter.getInstance().getBotEncoder()),
+        () -> Vision.getInstance().getYaw().getDouble(0.0),
         // This should return the setpoint (can also be a constant)
-        () -> SmartDashboard.getNumber("Bottom Setpoint", 0),
+        () -> 0,
         // This uses the output
         output -> {
           // Use the output here
-          Shooter.getInstance().setBottom(output);
+          Turret.getInstance().setSpeed(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -42,6 +42,5 @@ public class BottomPIDShooter extends PIDCommand {
   @Override
   public boolean isFinished() {
     return false;
-    //getController().atSetpoint();
   }
 }

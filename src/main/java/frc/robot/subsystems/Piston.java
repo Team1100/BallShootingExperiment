@@ -17,16 +17,16 @@ public class Piston extends SubsystemBase {
   // here. Call these from Commands.
 	private static Piston piston;
 	Compressor compressor;
-  DoubleSolenoid valve;
+  	DoubleSolenoid valve;
   
   /**
    * Creates a new Piston.
    */
   public Piston() {
 		// Instantiate left motor class
-		compressor = new Compressor(RobotMap.P_PISTON);
-		compressor.setClosedLoopControl(true);
-		valve = new DoubleSolenoid(RobotMap.P_PORT0, RobotMap.P_PORT1);
+		//compressor = new Compressor(RobotMap.P_PISTON);
+		//compressor.setClosedLoopControl(true);
+		valve = new DoubleSolenoid(RobotMap.P_PCM_CAN, RobotMap.P_PORT0, RobotMap.P_PORT1);
   }
 
 	/**
