@@ -105,9 +105,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Run Turret", new RunTurret(Turret.getInstance()));
     SmartDashboard.putNumber("Top Setpoint", 0);
     SmartDashboard.putNumber("Bottom Setpoint", 0);
-    SmartDashboard.putData("Top PID", new TopPIDShooter());
-    SmartDashboard.putData("Bot PID", new BottomPIDShooter());
-    SmartDashboard.putData("Fire Ball", new FireBall());
+
+    SmartDashboard.putData("Top PID Shooter", new TopPIDShooter());
+    SmartDashboard.putData("Bottom PID Shooter", new BottomPIDShooter());
 
 
     SmartDashboard.putNumber("Bottom Rotations", 0);
@@ -124,6 +124,7 @@ public class Robot extends TimedRobot {
     //ds.schedule();
 
     SmartDashboard.putNumber("iterations", 5);
+    SmartDashboard.putNumber("period", 0.2);
     SmartDashboard.putData(new OpenValve());
     SmartDashboard.putData(new CloseValve());
     SmartDashboard.putData(new RapidFirePiston());
