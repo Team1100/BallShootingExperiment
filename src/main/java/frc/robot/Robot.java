@@ -18,6 +18,7 @@ import frc.robot.commands.FireBall;
 import frc.robot.commands.OpenValve;
 import frc.robot.commands.PIDTurret;
 import frc.robot.commands.RapidFirePiston;
+import frc.robot.commands.RunShooter;
 import frc.robot.commands.RunTurret;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -115,6 +116,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Top RPM", 0);
     SmartDashboard.putNumber("Bot RPM", 0);
 
+    SmartDashboard.putNumber("Top Speed", 0);
+    SmartDashboard.putNumber("Bottom Speed", 0);
+
+    SmartDashboard.putData("Run Shooter", new RunShooter());
 
     Shooter.getInstance().getBotEncoder().reset();
     Shooter.getInstance().getTopEncoder().reset();
@@ -129,6 +134,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(new CloseValve());
     SmartDashboard.putData(new RapidFirePiston());
     SmartDashboard.putData(new PIDTurret());
+
+    Turret.getInstance().getEncoder().reset();
   }
 
   /**
@@ -140,6 +147,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Top Rotations", Shooter.getInstance().getTopEncoder().getDistance());
     SmartDashboard.putNumber("Top RPM", Shooter.getInstance().getRPM(Shooter.getInstance().getTopEncoder()));
     SmartDashboard.putNumber("Bot RPM", Shooter.getInstance().getRPM(Shooter.getInstance().getBotEncoder()));
+    SmartDashboard.putNumber("Turret Encoder", Turret.getInstance().getEncoder().getDistance());
 
   }
 

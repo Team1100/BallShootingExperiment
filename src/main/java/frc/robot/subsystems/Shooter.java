@@ -10,12 +10,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
 
-  private WPI_TalonSRX bottomShooter;
-  private WPI_TalonSRX topShooter;
+  private VictorSP bottomShooter;
+  private VictorSP topShooter;
 
   private Encoder botEncoder;
   private Encoder topEncoder;
@@ -29,10 +30,10 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public Shooter() {
-    bottomShooter = new WPI_TalonSRX(0);
-    topShooter = new WPI_TalonSRX(1);
+    bottomShooter = new VictorSP(2);
+    topShooter = new VictorSP(1);
 
-    botEncoder = new Encoder(5,6);
+    botEncoder = new Encoder(7,8);
     topEncoder = new Encoder(2,3);
 
     topEncoder.setDistancePerPulse(1/TOP_PPD);
@@ -56,11 +57,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setBottom(double speed){
-    bottomShooter.set(speed);
+    bottomShooter.set(-speed);
   }
 
   public void setTop(double speed){
-    topShooter.set(-speed);
+    topShooter.set(speed);
   }
 
   public Encoder getBotEncoder(){

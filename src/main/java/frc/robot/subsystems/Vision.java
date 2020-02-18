@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
   public static NetworkTable nt;
-  public NetworkTableEntry yaw;
+  public NetworkTableEntry yaw, isValid;
   public static Vision vision;
 
   /**
@@ -23,6 +23,7 @@ public class Vision extends SubsystemBase {
   public Vision() {
     nt = NetworkTableInstance.getDefault().getTable("chameleon-vision").getSubTable("HD Pro Webcam C920");
     yaw = nt.getEntry("targetYaw");
+    isValid = nt.getEntry("isValid");
   }
 
   public static Vision getInstance(){
@@ -34,6 +35,10 @@ public class Vision extends SubsystemBase {
 
   public NetworkTableEntry getYaw(){
     return yaw;
+  }
+
+  public NetworkTableEntry getIsValid(){
+    return isValid;
   }
 
   @Override

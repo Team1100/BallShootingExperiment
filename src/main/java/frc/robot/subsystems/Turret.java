@@ -7,22 +7,33 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
-  private Victor turretMotor;
+  private VictorSP turretMotor;
   private static Turret turret;
+  private Encoder encoder;
+  private double PPD = 1024;
   /**
    * Creates a new Turret.
    */
   public Turret() {
-    turretMotor = new Victor(0);
+    turretMotor = new VictorSP(0);
+    encoder = new Encoder(4, 5);
+    encoder.setDistancePerPulse(1/PPD);
   }
 
   public void setSpeed(double speed){
-    turretMotor.set(speed);
+    if(Vision.getInstance().getIsValid().getBoolean(false)){
+      turretMotor.set(speed);
+    }
+    else{
+      turretMotor.set(0);
+    }
   }
 
   public static Turret getInstance(){
@@ -30,6 +41,10 @@ public class Turret extends SubsystemBase {
       turret = new Turret();
     }
     return turret;
+  }
+
+  public Encoder getEncoder(){
+    return encoder;
   }
 
   @Override
